@@ -73,3 +73,8 @@ $ ansible-playbook -u <your ssh user> -b -i inventory/inventory.cfg kube-tasks/d
 |--enable-kube-shell | Install kube-shell. No value, boolean flag. | No. Default: false |
 |--enable-monitoring | Install Heapster. No value, boolean flag. | No. Default: false |
 |--enable-ingress | Install simple nginx ingress. No value, boolean flag. | No. Default: false |
+
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
