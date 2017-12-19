@@ -1,0 +1,7 @@
+---
+
+- name: install pip
+  yum:
+    name: python-pip
+    state: present
+    update_cache: yes

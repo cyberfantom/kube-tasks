@@ -1,0 +1,39 @@
+---
+
+- include_tasks: "{{ ansible_os_family|lower }}.yml"
+
+- name: Install kubeshell
+  shell: >
+      pip install kube-shell
+  when: kube_shell
+
+- name: Install ingress
+  shell: >
+      {{ ingress_install_cmd }}
+  when: ingress
+
+- name: Copy nginx ingress file
+  template:
+    src: ngx-service.yml.j2
+    dest: /tmp/ngx-service.yml
+    owner: root
+    group: root
+    mode: 0644
+  when: ingress
+
+- name: Install nginx ingress service
+  shell: >
+      kubectl create -f /tmp/ngx-service.yml
+  when: ingress
+
+- name: Clone heapster monitoring repo
+  git:
+    repo: 'https://github.com/kubernetes/heapster.git'
+    dest: /opt/heapster
+    clone: yes
+  when: monitoring
+
+- name: Install heapster monitoring
+  shell: |
+      {{ heapster_install_cmd }}
+  when: monitoring

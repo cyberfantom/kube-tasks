@@ -1,0 +1,4 @@
+---
+- import_playbook: preinstall.yml
+- import_playbook: ../cluster.yml
+- import_playbook: postinstall.yml

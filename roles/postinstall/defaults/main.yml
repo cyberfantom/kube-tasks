@@ -1,0 +1,3 @@
+kube_shell: true
+ingress: true
+monitoring: true
