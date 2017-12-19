@@ -53,11 +53,15 @@ $ python kube-tasks/prepare.py multinode --master-ips 1.2.3.4 --node-ips 1.2.3.5
 ```
 ##### Example for multi node cluster with Helm and Heapster monitoring:
 ```bash
-$ python kube-tasks/prepare.py multinode --master-ips 1.2.3.4 --node-ips 1.2.3.5 1.2.3.4.6 --enable-helm --enable-monitoring
+$ python kube-tasks/prepare.py multinode \
+--master-ips 1.2.3.4 \
+--node-ips 1.2.3.5 1.2.3.4.6 \
+--enable-helm --enable-monitoring
 ```
 ##### Run ansible playbook after:
 ```bash
-$ ansible-playbook -u <your ssh user> -b -i inventory/inventory.cfg kube-tasks/deploy.yml --private-key=/path/to/your/ssh/private_key
+$ ansible-playbook -u <your ssh user> -b -i inventory/inventory.cfg \
+kube-tasks/deploy.yml --private-key=/path/to/your/ssh/private_key
 ```
 #### Options
 | Option  | Value |Required |
