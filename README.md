@@ -68,6 +68,7 @@ kube-tasks/deploy.yml --private-key=/path/to/your/ssh/private_key
 | ------------- | ------------- |------------- |
 | --master-ips  | Ip list. Values: 1.2.3.4 1.2.3.4...1.2.3.n  | Yes. For singlenode and multionode modes  |
 | --node-ips  | Ip list. Values: 1.2.3.4 1.2.3.4...1.2.3.n  | Yes. For multinode mode only  |
+| --python-interpreter  | Ansible remote python interpreter path.  | No. Default: /usr/bin/python3  |
 |--master-as-node | Use master host as node. No value, boolean flag.| No. Default: false (for multinode)|
 |--network | Cluster network plugin. Values: calico, contiv, weave, flannel, cloud | No. Default: flannel|
 |--enable-helm | Enable helm. No value, boolean flag. | No. Default: false|
