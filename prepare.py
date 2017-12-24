@@ -89,8 +89,8 @@ def prepare_k8s_cluster_config(args):
     set_yaml_config(K8S_CLUSTER_CONFIG_PATH, config)
 
 
-# Configure inventory/inventory.cfg
-def prepare_inventory(args):
+# Init config for inventory
+def inventory_config_init():
 
     config = configparser.ConfigParser(allow_no_value=True)
     config.add_section('all')
@@ -99,40 +99,72 @@ def prepare_inventory(args):
     config.add_section('kube-node')
     config.add_section('k8s-cluster:children')
 
-    if args.type == 'singlenode':
-        single_host_tpl = 'master ansible_ssh_host={0} ansible_python_interpreter={1} # ip=10.3.0.1'
-        ansible_ssh_host = args.master_ips[0]
-        config.set('all', single_host_tpl.format(
-            ansible_ssh_host, args.python_interpreter))
-        config.set('kube-master', 'master')
-        config.set('etcd', 'master')
-        config.set('kube-node', 'master')
+    return config
 
-    if args.type == 'multinode':
-        multi_host_tpl = '{0} ansible_ssh_host={1} ansible_python_interpreter={2} # ip=10.3.0.{3}'
-        for m in range(len(args.master_ips)):
-            ansible_ssh_host = args.master_ips[m]
-            master_name = 'master-' + str(m + 1)
-            config.set('all', multi_host_tpl.format(
-                master_name, ansible_ssh_host, args.python_interpreter, str(m + 1)))
-            config.set('kube-master', master_name)
-            config.set('etcd', master_name)
-            if args.master_as_node:
-                config.set('kube-node', master_name)
 
-        for n in range(len(args.node_ips)):
-            ansible_ssh_host = args.node_ips[n]
-            node_name = 'node-' + str(n + 1)
-            config.set('all', multi_host_tpl.format(
-                node_name, ansible_ssh_host, args.python_interpreter, str(n + 10)))
-            config.set('kube-node', node_name)
-
-    config.set('k8s-cluster:children', 'kube-node')
-    config.set('k8s-cluster:children', 'kube-master')
+# Write inventory config file
+def inventory_config_write(config):
 
     cfgfile = open(INVENTORY_CONFIG_PATH, 'w')
     config.write(cfgfile)
     cfgfile.close()
+
+
+# Set singlenode inventory
+def inventory_config_single(args, config):
+
+    single_host_tpl = 'master ansible_ssh_host={0} ansible_python_interpreter={1} # ip=10.3.0.1'
+
+    ansible_ssh_host = args.master_ips[0]
+    config.set('all', single_host_tpl.format(
+        ansible_ssh_host, args.python_interpreter))
+    config.set('kube-master', 'master')
+    config.set('etcd', 'master')
+    config.set('kube-node', 'master')
+
+    return config
+
+
+# Set multinode inventory
+def inventory_config_multi(args, config):
+
+    multi_host_tpl = '{0} ansible_ssh_host={1} ansible_python_interpreter={2} # ip=10.3.0.{3}'
+
+    for m in range(len(args.master_ips)):
+        ansible_ssh_host = args.master_ips[m]
+        master_name = 'master-' + str(m + 1)
+        config.set('all', multi_host_tpl.format(
+            master_name, ansible_ssh_host, args.python_interpreter, str(m + 1)))
+        config.set('kube-master', master_name)
+        config.set('etcd', master_name)
+        if args.master_as_node:
+            config.set('kube-node', master_name)
+
+    for n in range(len(args.node_ips)):
+        ansible_ssh_host = args.node_ips[n]
+        node_name = 'node-' + str(n + 1)
+        config.set('all', multi_host_tpl.format(
+            node_name, ansible_ssh_host, args.python_interpreter, str(n + 10)))
+        config.set('kube-node', node_name)
+
+    return config
+
+
+# Configure inventory/inventory.cfg
+def prepare_inventory(args):
+
+    config = inventory_config_init()
+
+    if args.type == 'singlenode':
+        config = inventory_config_single(args, config)
+
+    if args.type == 'multinode':
+        config = inventory_config_multi(args, config)
+
+    config.set('k8s-cluster:children', 'kube-node')
+    config.set('k8s-cluster:children', 'kube-master')
+
+    inventory_config_write(config)
 
 
 # Configure roles/postinstall/defaults/main.yml
