@@ -60,7 +60,7 @@ Remeber that etcd nodes must be an odd number - 1,3,5...
 ```bash
 $ python kube-tasks/prepare.py multinode \
 --master-ips 1.2.3.4 \
---node-ips 1.2.3.5 1.2.3.4.6 1.2.3.4.7\
+--node-ips 1.2.3.5 1.2.3.6 1.2.3.7\
 --enable-helm --enable-monitoring
 ```
 ##### Run ansible playbook after:
@@ -83,7 +83,7 @@ kube-tasks/deploy.yml --private-key=/path/to/your/ssh/private_key
 |--disable-swap-fail | Disable swap fail. No value, boolean flag. |No. Default: false|
 |--enable-kube-shell | Install kube-shell. No value, boolean flag. | No. Default: false |
 |--enable-monitoring | Install Elasticsearch/Fluentd/Kibana. No value, boolean flag. | No. Default: false |
-|----loadbalancer | External loadbalancer FQDN. It can be AWS ELB domain name, Haproxy, Nginx or any other. See more https://github.com/kubernetes-incubator/kubespray/blob/master/docs/ha-mode.md | No. Default: None |
+|--loadbalancer | External loadbalancer FQDN. It can be AWS ELB domain name, Haproxy, Nginx or any other. See more https://github.com/kubernetes-incubator/kubespray/blob/master/docs/ha-mode.md | No. Default: None |
 |--enable-ingress | Install simple nginx ingress. No value, boolean flag. | No. Default: false |
 
 

@@ -135,15 +135,20 @@ def inventory_config_single(args, config):
     return config
 
 
-# Set Etcd nodes if defined
-def set_etcd_nodes(args, config):
+# Set nodes (workers or etcd if defined)
+def set_nodes(node_type, args, config, config_section):
 
-    for e in range(len(args.etcd_ips)):
-        ansible_ssh_host = args.etcd_ips[e]
-        etcd_node_name = 'etcd-' + str(e + 1)
+    if node_type == 'node':
+        ips = args.node_ips
+    if node_type == 'etcd':
+        ips = args.etcd_ips
+
+    for n in range(len(ips)):
+        ansible_ssh_host = ips[n]
+        node_name = node_type + '-' + str(n + 1)
         config.set('all', MULTI_HOST_TPL.format(
-            etcd_node_name, ansible_ssh_host, args.python_interpreter, str(e + 10)))
-        config.set('etcd', etcd_node_name)
+            node_name, ansible_ssh_host, args.python_interpreter, str(n + 10)))
+        config.set(config_section, node_name)
 
     return config
 
@@ -153,7 +158,7 @@ def inventory_config_multi(args, config):
 
     etcd_on_masters = True
     if args.etcd_ips is not None:
-        config = set_etcd_nodes(args, config)
+        config = set_nodes('etcd', args, config, 'etcd')
         etcd_on_masters = False
 
     for m in range(len(args.master_ips)):
@@ -167,12 +172,7 @@ def inventory_config_multi(args, config):
         if args.master_as_node:
             config.set('kube-node', master_name)
 
-    for n in range(len(args.node_ips)):
-        ansible_ssh_host = args.node_ips[n]
-        node_name = 'node-' + str(n + 1)
-        config.set('all', MULTI_HOST_TPL.format(
-            node_name, ansible_ssh_host, args.python_interpreter, str(n + 10)))
-        config.set('kube-node', node_name)
+    config = set_nodes('node', args, config, 'kube-node')
 
     return config
 
