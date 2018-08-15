@@ -52,7 +52,10 @@ $ python kube-tasks/prepare.py singlenode --master-ips 1.2.3.4
 ```
 ##### Example for simple multi node cluster:
 ```bash
-$ python kube-tasks/prepare.py multinode --master-ips 1.2.3.4 --node-ips 1.2.3.5 1.2.3.4.6 [--etcd-ips 1.2.3.7 1.2.3.8 1.2.3.9]
+$ python kube-tasks/prepare.py multinode \
+--master-ips 1.2.3.4 \
+--node-ips 1.2.3.5 1.2.3.4.6 \
+[--etcd-ips 1.2.3.7 1.2.3.8 1.2.3.9]
 ```
 Here --etcd-ips is the optional param. If this param is omitted, etcd service will be installed on the master node(s) by default.
 Remeber that etcd nodes must be an odd number - 1,3,5...
@@ -71,20 +74,20 @@ kube-tasks/deploy.yml --private-key=/path/to/your/ssh/private_key
 #### Options
 | Option  | Value |Required |
 | ------------- | ------------- |------------- |
-| --master-ips  | Master IP list. Values: 1.2.3.4 1.2.3.4...1.2.3.n  | Yes. For singlenode and multionode modes  |
-| --node-ips  | Nodes IP list. Values: 1.2.3.4 1.2.3.4...1.2.3.n  | Yes. For multinode mode only  |
-| --etcd-ips  | Etcd nodes IP list. Values: 1.2.3.7 1.2.3.8...1.2.3.n  | No. If defined must be an odd number  |
-| --python-interpreter  | Ansible remote python interpreter path.  | No. Default: /usr/bin/python3  |
-|--master-as-node | Use master host as node. No value, boolean flag.| No. Default: false (for multinode)|
-|--network | Cluster network plugin. Values: calico, contiv, weave, flannel, cloud | No. Default: flannel|
-|--enable-helm | Enable helm. No value, boolean flag. | No. Default: false|
-|--helm-deployment-type | Helm deployment type. Values: host, docker | No. Default: docker|
-|--enable-local-volumes | Enable local volumes. No value, boolean flag.|  No. Default: false|
-|--disable-swap-fail | Disable swap fail. No value, boolean flag. |No. Default: false|
-|--enable-kube-shell | Install kube-shell. No value, boolean flag. | No. Default: false |
-|--enable-monitoring | Install Elasticsearch/Fluentd/Kibana. No value, boolean flag. | No. Default: false |
-|--loadbalancer | External loadbalancer FQDN. It can be AWS ELB domain name, Haproxy, Nginx or any other. See more https://github.com/kubernetes-incubator/kubespray/blob/master/docs/ha-mode.md | No. Default: None |
-|--enable-ingress | Install simple nginx ingress. No value, boolean flag. | No. Default: false |
+| master-ips  | Master IP list. Values: 1.2.3.4 1.2.3.4...1.2.3.n  | Yes. For singlenode and multionode modes  |
+| node-ips  | Nodes IP list. Values: 1.2.3.4 1.2.3.4...1.2.3.n  | Yes. For multinode mode only  |
+| etcd-ips  | Etcd nodes IP list. Values: 1.2.3.7 1.2.3.8...1.2.3.n  | No. If defined must be an odd number  |
+| python-interpreter  | Ansible remote python interpreter path.  | No. Default: /usr/bin/python3  |
+| master-as-node | Use master host as node. No value, boolean flag.| No. Default: false (for multinode)|
+| network | Cluster network plugin. Values: calico, contiv, weave, flannel, cloud | No. Default: flannel|
+| enable-helm | Enable helm. No value, boolean flag. | No. Default: false|
+| helm-deployment-type | Helm deployment type. Values: host, docker | No. Default: docker|
+| enable-local-volumes | Enable local volumes. No value, boolean flag.|  No. Default: false|
+| disable-swap-fail | Disable swap fail. No value, boolean flag. |No. Default: false|
+| enable-kube-shell | Install kube-shell. No value, boolean flag. | No. Default: false |
+| enable-monitoring | Install Elasticsearch/Fluentd/Kibana. No value, boolean flag. | No. Default: false |
+| loadbalancer | External loadbalancer FQDN. It can be AWS ELB domain name, Haproxy, Nginx or any other. See more https://github.com/kubernetes-incubator/kubespray/blob/master/docs/ha-mode.md | No. Default: None |
+| enable-ingress | Install simple nginx ingress. No value, boolean flag. | No. Default: false |
 
 
 ## License
