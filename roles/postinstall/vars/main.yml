@@ -22,7 +22,3 @@ ingress_install_cmd: >-
   curl https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/with-rbac.yaml \
     | kubectl apply -f -
 
-heapster_install_cmd: >-
-  kubectl create -f /opt/heapster/deploy/kube-config/influxdb
-
-  kubectl create -f /opt/heapster/deploy/kube-config/rbac/heapster-rbac.yaml

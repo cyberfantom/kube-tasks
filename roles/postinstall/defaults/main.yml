@@ -1,3 +1,2 @@
 kube_shell: false
 ingress: false
-monitoring: true
