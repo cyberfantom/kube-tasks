@@ -1,5 +1,6 @@
 # kube-tasks
 [![Maintainability](https://api.codeclimate.com/v1/badges/757a5b3f07442971d4df/maintainability)](https://codeclimate.com/github/cyberfantom/kube-tasks/maintainability)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/cb900e6d3af648f486b01101b2519df9)](https://www.codacy.com/project/www.wayfarer/kube-tasks/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=cyberfantom/kube-tasks&amp;utm_campaign=Badge_Grade_Dashboard)
 
 Easy Kubespray configurator.
 
