@@ -13,9 +13,8 @@ A clear and concise description of what the bug is.
  - Kubespray version [e.g. 2.6.0]
  - Ansible version [e.g. 2.6.0]
 
-**To Reproduce**
-Steps to reproduce the behavior:
-- Full cli command with params
+**Steps to reproduce the behavior:**
+ - Full cli command with params
 
 **Expected behavior**
 A clear and concise description of what you expected to happen.
